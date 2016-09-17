@@ -23,6 +23,8 @@ targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	mavenCentral()
+	maven { url "https://repo.spring.io/libs-release" }
 }
 
 
