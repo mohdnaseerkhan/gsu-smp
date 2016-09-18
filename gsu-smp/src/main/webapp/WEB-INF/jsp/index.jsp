@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Welcome to the springs after a long time..! </h1>
+<h1>This page shows the description of the SMP portal! </h1>
 </body>
 </html>
