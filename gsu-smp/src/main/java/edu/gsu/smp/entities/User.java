@@ -1,6 +1,5 @@
 package edu.gsu.smp.entities;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,20 +15,17 @@ import javax.persistence.Table;
 
 import edu.gsu.smp.util.MyUtil;
 
-
 @Entity
 @Table(name="user", indexes = {
 	@Index(columnList = "email", unique=true),@Index(columnList = "forgotPasswordCode", unique=true)
 })
 public class User {
 	
-	
 	public static final int EMAIL_MAX = 250;
 	public static final int NAME_MAX = 50;
 	public static final String EMAIL_PATTERN = "[A-Za-z0-9._%-+]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
 	public static final int RANDOM_CODE_LENGTH = 16;
 	public static final int PASSWORD_MAX = 30;
-	
 	
 	public static enum Role {
 		UNVERIFIED, BLOCKED, ADMIN
