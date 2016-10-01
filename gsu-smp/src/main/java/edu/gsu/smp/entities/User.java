@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import edu.gsu.smp.util.MyUtil;
 
@@ -38,12 +40,17 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
+	@NotNull
 	@Column(nullable = false, length = EMAIL_MAX)
 	private String email;
 	
+	@NotNull
+	@Size(min=1, max=User.NAME_MAX, message="{nameSizeError}")
 	@Column(nullable = false, length = NAME_MAX)
 	private String firstName;
 	
+	@NotNull
+	@Size(min=1, max=User.NAME_MAX, message="{nameSizeError}")
 	@Column(nullable = false, length = NAME_MAX)
 	private String lastName;
 	
