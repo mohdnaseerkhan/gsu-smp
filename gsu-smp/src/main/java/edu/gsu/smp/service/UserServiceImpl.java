@@ -205,7 +205,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 				    		try {
 	
 				    			String loginLink = MyUtil.hostUrl() + "/login";
-				    			mailSender.send(user.getEmail(), MyUtil.getMessage("changePassword"), MyUtil.getMessage("changePasswordMessage", loginLink));
+				    			mailSender.send(user.getEmail(), MyUtil.getMessage("passwordChanged"), MyUtil.getMessage("passwordChanged", loginLink));
 							} catch (MessagingException e) {
 								logger.error(ExceptionUtils.getStackTrace(e));
 							}
