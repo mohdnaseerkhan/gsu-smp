@@ -1,5 +1,6 @@
 package edu.gsu.smp.entities;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class User {
 	
 	
 	public static enum Role {
-		UNVERIFIED, BLOCKED, ADMIN
+		UNVERIFIED, BLOCKED, ADMIN, MANAGER, EMPLOYEE
 	}
 
 	@Id
@@ -50,8 +51,107 @@ public class User {
 	@Column(length = 16)
 	private String verificationCode;
 	
+	@Column(nullable=true, length=15)
+	private String phone;
+	
+	@Column(nullable=true)
+	private double salary;
+	
+	@Column(nullable=true, length=64)
+	private String address;
+	
+	@Column(nullable=true, length=32)
+	private String city;
+	
+	@Column(nullable=true, length=16)
+	private String state;
+	
+	@Column(nullable=true, length=16)
+	private String country;
+	
+	@Column(nullable=true, length=12)
+	private String postal;
+	
+	@Column(nullable=true, length=4)
+	private String gender;
+
+	@Column(nullable=true)
+	private Date dob;
+	
 	@Column(length = RANDOM_CODE_LENGTH)
 	private String forgotPasswordCode;
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public String getPostal() {
+		return postal;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public void setPostal(String postal) {
+		this.postal = postal;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
 
 	public String getForgotPasswordCode() {
 		return forgotPasswordCode;
