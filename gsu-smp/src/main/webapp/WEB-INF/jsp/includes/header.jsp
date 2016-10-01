@@ -48,7 +48,7 @@
               <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <span class="glyphicon glyphicon-user"></span>
-                      <sec:authentication property="principal.user.name" /> <b class="caret"></b>
+                      <sec:authentication property="principal.user.firstName" /> <b class="caret"></b>
                   </a>
                   <ul class="dropdown-menu">
                      <li><a href="/users/<sec:authentication property='principal.user.id' />"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
