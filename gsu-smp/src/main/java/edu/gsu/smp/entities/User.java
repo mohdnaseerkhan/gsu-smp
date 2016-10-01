@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
+import edu.gsu.smp.util.MyUtil;
+
 @Entity
 @Table(name="user", indexes = {
 		@Index(columnList = "email", unique=true),@Index(columnList = "forgotPasswordCode", unique=true)
@@ -114,12 +116,12 @@ public class User {
 		return roles.contains(Role.ADMIN);
 	}
 	
-	/*public boolean isEditable() {
+	public boolean isEditable() {
 		User loggedIn = MyUtil.getSessionUser();
 		if (loggedIn == null)
 			return false;
 		return loggedIn.isAdmin() ||   // ADMIN or
 			   loggedIn.getId() == id; // self can edit
-	}*/
+	}
 
 }
