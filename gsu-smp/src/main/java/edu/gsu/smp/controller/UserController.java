@@ -55,7 +55,8 @@ public class UserController {
     public String edit(@PathVariable("userId") long userId, Model model) {
 		User user = userService.findOne(userId);
 		UserEditForm form = new UserEditForm();
-		form.setName(user.getName());
+		form.setFirstName(user.getFirstName());
+		form.setLastName(user.getLastName());
 		form.setRoles(user.getRoles());
     	model.addAttribute(form);
     	

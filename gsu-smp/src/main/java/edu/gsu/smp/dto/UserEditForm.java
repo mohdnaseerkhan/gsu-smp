@@ -13,16 +13,28 @@ public class UserEditForm {
 	
 	@NotNull
 	@Size(min=1, max=User.NAME_MAX, message="{nameSizeError}")
-	private String name = "";
+	private String firstName;
+	
+	@NotNull
+	@Size(min=1, max=User.NAME_MAX, message="{nameSizeError}")
+	private String lastName;
 	
 	private Set<Role> roles;
-
-	public String getName() {
-		return name;
+	
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Set<Role> getRoles() {

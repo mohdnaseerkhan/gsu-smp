@@ -42,7 +42,10 @@ public class User {
 	private String email;
 	
 	@Column(nullable = false, length = NAME_MAX)
-	private String name;
+	private String firstName;
+	
+	@Column(nullable = false, length = NAME_MAX)
+	private String lastName;
 	
 	// no length because it will be encrypted
 	@Column(nullable = false)
@@ -80,6 +83,22 @@ public class User {
 	
 	@Column(length = RANDOM_CODE_LENGTH)
 	private String forgotPasswordCode;
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	
 	public String getPhone() {
 		return phone;
@@ -194,14 +213,6 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPassword() {

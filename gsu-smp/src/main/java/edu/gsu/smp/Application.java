@@ -40,7 +40,8 @@ public class Application {
 			if (repository.findAll().isEmpty()) {
 				User user = new User();
 				user.setEmail("naseer698@gmail.com");
-				user.setName("naseer");
+				user.setFirstName("naseer");
+				user.setLastName("khan");
 				// the password passed below is the encrypted password(123456)
 				user.setPassword("$2a$10$la.CVFcxEVksWaP6yxBnH.XBcT3LoVBRFN5NyZXLXbGumdwWmeBWW");
 				user.getRoles().add(Role.ADMIN);
