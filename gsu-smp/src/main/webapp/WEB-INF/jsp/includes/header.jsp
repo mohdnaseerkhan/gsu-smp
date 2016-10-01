@@ -29,7 +29,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="/admin/contact">Contact Manager</a>
+	      <a class="navbar-brand" href="/">GSU-SMP</a>
 	    </div>
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
