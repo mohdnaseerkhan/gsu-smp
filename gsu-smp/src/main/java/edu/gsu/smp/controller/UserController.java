@@ -54,11 +54,7 @@ public class UserController {
     @RequestMapping(value = "/{userId}/edit")
     public String edit(@PathVariable("userId") long userId, Model model) {
 		User user = userService.findOne(userId);
-		UserEditForm form = new UserEditForm();
-		form.setFirstName(user.getFirstName());
-		form.setLastName(user.getLastName());
-		form.setRoles(user.getRoles());
-    	model.addAttribute(form);
+    	model.addAttribute(user);
     	
 		return "user-edit";
 
@@ -75,7 +71,7 @@ public class UserController {
 
 		userService.update(userId, userEditForm);
 		MyUtil.flash(redirectAttributes, "success", "editSuccessful");
-		request.logout();
+		// request.logout();
 
 		return "redirect:/";
 	}

@@ -242,4 +242,15 @@ public class User {
 			   loggedIn.getId() == id; // self can edit
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", password=" + password + ", verificationCode=" + verificationCode + ", phone=" + phone + ", salary="
+				+ salary + ", address=" + address + ", city=" + city + ", state=" + state + ", country=" + country
+				+ ", postal=" + postal + ", gender=" + gender + ", dob=" + dob + ", forgotPasswordCode="
+				+ forgotPasswordCode + ", roles=" + roles + "]";
+	}
+	
+	
+
 }
