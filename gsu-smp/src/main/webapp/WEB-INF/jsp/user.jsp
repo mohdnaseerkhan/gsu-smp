@@ -8,12 +8,28 @@
     
     <div class="panel-body">
         <dl class="dl-horizontal">
-            <dt>Name</dt>
-            <dd><c:out value="${user.name}" /></dd>
+            <dt>First Name</dt>
+            <dd><c:out value="${user.firstName}" /></dd>
+            <dt>Last Name</dt>
+            <dd><c:out value="${user.lastName}" /></dd>
             <dt>Email</dt>
             <dd><c:out value="${user.email}" /></dd>
-            <dt>Roles</dt>
-            <dd><c:out value="${user.roles}" /></dd>
+            <dt>phone</dt>
+            <dd><c:out value="${user.phone}" /></dd>
+            <dt>address</dt>
+            <dd><c:out value="${user.address}" /></dd>
+            <dt>city</dt>
+            <dd><c:out value="${user.city}" /></dd>
+            <dt>state</dt>
+            <dd><c:out value="${user.state}" /></dd>
+            <dt>country</dt>
+            <dd><c:out value="${user.country}" /></dd>
+            <dt>postal</dt>
+            <dd><c:out value="${user.postal}" /></dd>
+            <dt>gender</dt>
+            <dd><c:out value="${user.gender}" /></dd>
+            <dt>dob</dt>
+            <dd><c:out value="${user.dob}" /></dd>
         </dl>
     </div>
     
