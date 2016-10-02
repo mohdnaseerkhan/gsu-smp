@@ -23,5 +23,7 @@ public interface UserService {
 	public abstract void update(long userId, UserEditForm userEditForm);
 
 	public abstract void updatePassword(ChangePasswordForm changePasswordForm);
+
+	public abstract void createEmployee(User user);
 	
 }

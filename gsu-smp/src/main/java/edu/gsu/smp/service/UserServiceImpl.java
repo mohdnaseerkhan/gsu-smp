@@ -30,56 +30,49 @@ import edu.gsu.smp.repositories.UserRepository;
 import edu.gsu.smp.util.MyUtil;
 
 @Service
-@Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UserServiceImpl implements UserService, UserDetailsService {
-	
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
 	private UserRepository userRepository;
 	private PasswordEncoder passwordEncoder;
-    private MailSender mailSender;
+	private MailSender mailSender;
 
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository,
-			PasswordEncoder passwordEncoder,
-			MailSender mailSender) {
-		
+	public void setUserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, MailSender mailSender) {
+
 		this.mailSender = mailSender;
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
-		
+
 	}
 
-	/*@Override
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
-	public void signup(SignupForm signupForm) {
-		final User user = new User();
-		user.setEmail(signupForm.getEmail());
-		user.setName(signupForm.getName());
-		user.setPassword(passwordEncoder.encode(signupForm.getPassword()));
-		user.getRoles().add(Role.UNVERIFIED);
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void createEmployee(User user) {
 		user.setVerificationCode(RandomStringUtils.randomAlphanumeric(16));
+		String password = user.getPassword();
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
-		
-		TransactionSynchronizationManager.registerSynchronization(
-			    new TransactionSynchronizationAdapter() {
-			        @Override
-			        public void afterCommit() {
-			    		try {
-			    			String verifyLink = MyUtil.hostUrl() + "/users/" + user.getVerificationCode() + "/verify";
-			    			mailSender.send(user.getEmail(), MyUtil.getMessage("verifySubject"), MyUtil.getMessage("verifyEmail", verifyLink));
-			    			logger.info("Verification mail to " + user.getEmail() + " queued.");
-						} catch (MessagingException e) {
-							logger.error(ExceptionUtils.getStackTrace(e));
-						}
-			        }
-		    });
-		
-	}*/
+
+		TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+			@Override
+			public void afterCommit() {
+				try {
+					String verifyLink = MyUtil.hostUrl() + "/users/" + user.getVerificationCode() + "/verify";
+					mailSender.send(user.getEmail(), MyUtil.getMessage("verifySubject"),
+							MyUtil.getMessage("verifyEmail", verifyLink + "\r\n Your temporary password is: " + password));
+					logger.info("Verification mail to " + user.getEmail() + " queued.");
+				} catch (MessagingException e) {
+					logger.error(ExceptionUtils.getStackTrace(e));
+				}
+			}
+		});
+	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByEmail(username);
 		if (user == null)
 			throw new UsernameNotFoundException(username);
@@ -88,130 +81,126 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void verify(String verificationCode) {
-		
+
 		long loggedInUserId = MyUtil.getSessionUser().getId();
 		User user = userRepository.findOne(loggedInUserId);
-		
+
 		MyUtil.validate(user.getRoles().contains(Role.UNVERIFIED), "alreadyVerified");
-		MyUtil.validate(user.getVerificationCode().equals(verificationCode),
-				"incorrect", "verification code");
-		
+		MyUtil.validate(user.getVerificationCode().equals(verificationCode), "incorrect", "verification code");
+
 		user.getRoles().remove(Role.UNVERIFIED);
 		user.setVerificationCode(null);
 		userRepository.save(user);
 
-		
 	}
 
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void forgotPassword(ForgotPasswordForm form) {
-		
+
 		final User user = userRepository.findByEmail(form.getEmail());
 		final String forgotPasswordCode = RandomStringUtils.randomAlphanumeric(User.RANDOM_CODE_LENGTH);
-		
+
 		user.setForgotPasswordCode(forgotPasswordCode);
 		final User savedUser = userRepository.save(user);
-		
-		TransactionSynchronizationManager.registerSynchronization(
-			    new TransactionSynchronizationAdapter() {
-			        @Override
-			        public void afterCommit() {
-			        	try {
-							mailForgotPasswordLink(savedUser);
-						} catch (MessagingException e) {
-							logger.error(ExceptionUtils.getStackTrace(e));
-						}
-			        }
 
-		    });				
+		TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+			@Override
+			public void afterCommit() {
+				try {
+					mailForgotPasswordLink(savedUser);
+				} catch (MessagingException e) {
+					logger.error(ExceptionUtils.getStackTrace(e));
+				}
+			}
+
+		});
 
 	}
-	
+
 	private void mailForgotPasswordLink(User user) throws MessagingException {
-		
-		String forgotPasswordLink = 
-				MyUtil.hostUrl() + "/reset-password/" +
-				user.getForgotPasswordCode();
-		mailSender.send(user.getEmail(),
-				MyUtil.getMessage("forgotPasswordSubject"),
+
+		String forgotPasswordLink = MyUtil.hostUrl() + "/reset-password/" + user.getForgotPasswordCode();
+		mailSender.send(user.getEmail(), MyUtil.getMessage("forgotPasswordSubject"),
 				MyUtil.getMessage("forgotPasswordEmail", forgotPasswordLink));
 
 	}
 
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
-	public void resetPassword(String forgotPasswordCode,
-			ResetPasswordForm resetPasswordForm,
-			BindingResult result) {
-		
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void resetPassword(String forgotPasswordCode, ResetPasswordForm resetPasswordForm, BindingResult result) {
+
 		User user = userRepository.findByForgotPasswordCode(forgotPasswordCode);
 		if (user == null)
 			result.reject("invalidForgotPassword");
-		
+
 		if (result.hasErrors())
 			return;
-		
+
 		user.setForgotPasswordCode(null);
 		user.setPassword(passwordEncoder.encode(resetPasswordForm.getPassword().trim()));
 		userRepository.save(user);
 	}
 
-
 	@Override
 	public User findOne(long userId) {
-		
+
 		User loggedIn = MyUtil.getSessionUser();
 		User user = userRepository.findOne(userId);
 
-		if (loggedIn == null ||
-			loggedIn.getId() != user.getId() && !loggedIn.isAdmin())
-			
+		if (loggedIn == null || loggedIn.getId() != user.getId() && !loggedIn.isAdmin())
+
 			user.setEmail("Confidential");
-			
+
 		return user;
 
 	}
-	
+
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void update(long userId, UserEditForm userEditForm) {
-		
+
 		User loggedIn = MyUtil.getSessionUser();
 		MyUtil.validate(loggedIn.isAdmin() || loggedIn.getId() == userId, "noPermissions");
 		User user = userRepository.findOne(userId);
 		user.setFirstName(userEditForm.getFirstName());
 		user.setLastName(userEditForm.getLastName());
-		if (loggedIn.isAdmin())
-			user.setRoles(userEditForm.getRoles());
+		user.setPhone(userEditForm.getPhone());
+		user.setAddress(userEditForm.getAddress());
+		user.setCity(userEditForm.getCity());
+		user.setState(userEditForm.getState());
+		user.setCountry(userEditForm.getCountry());
+		user.setPostal(userEditForm.getPostal());
+		user.setGender(userEditForm.getGender());
+		user.setDob(userEditForm.getDob());
 		userRepository.save(user);
-		
+
 	}
 
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void updatePassword(ChangePasswordForm changePasswordForm) {
-		
+
 		try {
 			// Getting user record by its session id
 			User user = userRepository.findOne(MyUtil.getSessionUser().getId());
 			// encrypting new password and setting it to the password field
 			user.setPassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
 			userRepository.save(user);
-			
-			TransactionSynchronizationManager.registerSynchronization(
-				    new TransactionSynchronizationAdapter() {
-				        @Override
-				        public void afterCommit() {
-				    		try {
-	
-				    			String loginLink = MyUtil.hostUrl() + "/login";
-				    			mailSender.send(user.getEmail(), MyUtil.getMessage("passwordChanged"), MyUtil.getMessage("passwordChanged", loginLink));
-							} catch (MessagingException e) {
-								logger.error(ExceptionUtils.getStackTrace(e));
-							}
-				        }
-			    });
+
+			TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+				@Override
+				public void afterCommit() {
+					try {
+
+						String loginLink = MyUtil.hostUrl() + "/login";
+						mailSender.send(user.getEmail(), MyUtil.getMessage("passwordChanged"),
+								MyUtil.getMessage("passwordChanged", loginLink));
+					} catch (MessagingException e) {
+						logger.error(ExceptionUtils.getStackTrace(e));
+					}
+				}
+			});
 		} catch (Exception e) {
 			return;
 		}
