@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import edu.gsu.smp.dto.UserEditForm;
 import edu.gsu.smp.entities.User;
 import edu.gsu.smp.service.UserService;
 import edu.gsu.smp.util.MyUtil;
+import edu.gsu.smp.validators.ChangePasswordFormValidator;
 
 
 @Controller
@@ -26,10 +29,17 @@ import edu.gsu.smp.util.MyUtil;
 public class UserController {
 	
 	private UserService userService;
+	private ChangePasswordFormValidator changePasswordFormValidator;
 	
 	@Autowired
-	public void setUserService(UserService userService) {
+	public void setUserService(UserService userService, ChangePasswordFormValidator changePasswordFormValidator) {
 		this.userService = userService;
+		this.changePasswordFormValidator = changePasswordFormValidator;
+	}
+	
+	@InitBinder("changePasswordForm")
+	protected void initChangePasswordBinder(WebDataBinder binder){
+		binder.setValidator(changePasswordFormValidator);
 	}
 	
 	@RequestMapping("/{verificationCode}/verify")
@@ -84,15 +94,30 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/{id}/change-password", method=RequestMethod.POST)
-	public String changePassword(@ModelAttribute("changePasswordForm") @Valid ChangePasswordForm changePasswordForm, 
+	public String changePassword(@PathVariable("id") long userId,
+			@ModelAttribute("changePasswordForm") @Valid ChangePasswordForm changePasswordForm, 
 			BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+		
+		long loggedInUserId = MyUtil.getSessionUser().getId();
+		
+		// String currentPassword = userService.findOne(loggedIn).getPassword();
 		
 		if(result.hasErrors()){
 			model.addAttribute("title", MyUtil.getMessage("passwordChanged"));
 			return "change-password";
 		}
-		userService.updatePassword(changePasswordForm);
-		MyUtil.flash(redirectAttributes, "success", "passwordChanged");
+		
+		if(loggedInUserId == userId) {
+			
+			System.out.println("  Authentication successful..!!!! ");						
+				
+				System.out.println(" Password changed Successfully...! ");
+				
+				userService.updatePassword(changePasswordForm);
+				MyUtil.flash(redirectAttributes, "success", "passwordChanged");
+				return "redirect:/";
+			}
+		
 		return "redirect:/";
 	}
 }
