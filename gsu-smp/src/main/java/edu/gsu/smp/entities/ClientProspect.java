@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name="client_prospect", indexes = {
@@ -26,7 +28,7 @@ public class ClientProspect {
 	
 	@NotNull
 	@Size(min=1, max=User.NAME_MAX, message="{nameSizeError}")
-	@Column(nullable = false, length = User.NAME_MAX)
+	@Column(nullable = false, name="company_name", length = User.NAME_MAX)
 	private String companyName;
 	
 	@NotNull
@@ -79,15 +81,12 @@ public class ClientProspect {
 	@Column(nullable=false, name="is_client", columnDefinition="tinyint(1) default 0")
 	private boolean isClient;
 	
-	@NotNull
-	@Type(type="org.hibernate.type.NumericBooleanType")
-	@Column(nullable=false, name="is_prospect", columnDefinition="tinyint(1) default 0")
-	private boolean isProspect;
+	@CreatedDate
+	@Column(name="date_created", columnDefinition="timestamp")
+	private Date dateCreated = new Date();
 	
-	@Column(nullable=true, name="date_created", columnDefinition="timestamp")
-	private Date dateCreated;
-	
-	@Column(nullable=true, name="last_updated", columnDefinition="datetime")
+	@LastModifiedDate
+	@Column(name="last_updated", columnDefinition="datetime")
 	private Date lastUpdated = new Date();
 
 	// setters and getters
@@ -155,12 +154,8 @@ public class ClientProspect {
 		return companyDescription;
 	}
 
-	public boolean isClient() {
+	public boolean getClient() {
 		return isClient;
-	}
-
-	public boolean isProspect() {
-		return isProspect;
 	}
 
 	public Date getDateCreated() {
@@ -237,10 +232,6 @@ public class ClientProspect {
 
 	public void setClient(boolean isClient) {
 		this.isClient = isClient;
-	}
-
-	public void setProspect(boolean isProspect) {
-		this.isProspect = isProspect;
 	}
 
 	public void setDateCreated(Date dateCreated) {

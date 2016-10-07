@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name="contacts" , indexes={@Index(columnList="cp_id")})
+@Table(name="contacts" , indexes={@Index(columnList="cp__id")})
 public class Contacts {
 	
 	@Id
@@ -22,7 +22,7 @@ public class Contacts {
 	private long id;
 	
 	@NotNull
-	@JoinColumn(table="client_prospect", referencedColumnName="id", nullable=false)
+	@JoinColumn(nullable=false, table="client_prospect", referencedColumnName="id")
 	@Column(name="cp__id")
 	private long cpId;
 	
