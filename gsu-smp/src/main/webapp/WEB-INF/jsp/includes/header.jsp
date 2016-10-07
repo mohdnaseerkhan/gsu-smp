@@ -61,6 +61,30 @@
                   </ul>
               </li>
             </sec:authorize>
+            
+            <sec:authorize access="isAuthenticated()">
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <span class="glyphicon glyphicon-user"></span>client <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                     <li><a href="/admin/client/create"><span class="glyphicon glyphicon-user"></span> create client</a></li>
+                     <li><a href="/admin/client/list"><span class="glyphicon glyphicon-user"></span> All clients</a></li>
+                  </ul>
+              </li>
+            </sec:authorize>
+            
+            <sec:authorize access="isAuthenticated()">
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <span class="glyphicon glyphicon-user"></span>employee <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                     <li><a href="/admin/create-employee"><span class="glyphicon glyphicon-user"></span> create employee</a></li>
+                     <li><a href="/admin/employees"><span class="glyphicon glyphicon-user"></span> All employees</a></li>
+                  </ul>
+              </li>
+            </sec:authorize>
    </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->

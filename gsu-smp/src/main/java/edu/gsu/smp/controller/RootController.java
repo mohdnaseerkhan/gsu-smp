@@ -2,7 +2,6 @@ package edu.gsu.smp.controller;
 
 import javax.validation.Valid;
 
-import org.hibernate.id.ForeignGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.gsu.smp.dto.ForgotPasswordForm;
 import edu.gsu.smp.dto.ResetPasswordForm;
-import edu.gsu.smp.mail.MailSender;
 import edu.gsu.smp.service.UserService;
 import edu.gsu.smp.util.MyUtil;
 
@@ -26,14 +24,10 @@ public class RootController {
 
 	private static final Logger logger = LoggerFactory.getLogger(RootController.class);
 	
-	private MailSender mailSender;
 	private UserService userService;
 
-	private RedirectAttributes redirectAttributes;
-
 	@Autowired
-	public RootController(MailSender mailSender, UserService userService) {
-		this.mailSender = mailSender;
+	public RootController(UserService userService) {
 		this.userService = userService;
 	}
 

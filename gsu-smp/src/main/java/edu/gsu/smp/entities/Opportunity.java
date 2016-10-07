@@ -8,12 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="opportunity", indexes={@Index(columnList="opportunity_name")})
+@Table(name="opportunity", indexes={@Index(columnList="opportunity_name"), @Index(columnList="cp__id")})
 public class Opportunity {
 	
 	@Id
@@ -22,7 +23,7 @@ public class Opportunity {
 	
 	@NotNull
 	@Size(min=1, max=User.NAME_MAX, message="{nameSizeError}")
-	@Column(nullable = false, length = User.NAME_MAX)
+	@Column(nullable = false, name="opportunity_name", length = User.NAME_MAX)
 	private String opportunityName;
 	
 	@NotNull
@@ -40,6 +41,11 @@ public class Opportunity {
 	@NotNull
 	@Column(nullable = false)
 	private double estimatedBudget;
+	
+	// proposal duration is no.of.days, usually 8 hrs / day
+	@NotNull
+	@Column(nullable = false)
+	private double proposalDuration;
 	
 	// this is a list of major products and services
 	@NotNull
@@ -65,6 +71,11 @@ public class Opportunity {
 	@Size(min=10, max=2000, message="{descriptionSizeError}")
 	@Column(nullable=false, columnDefinition="text")
 	private String opportunityNotes;
+	
+	@NotNull
+	@JoinColumn(nullable=false, table="client_prospect", referencedColumnName="id")
+	@Column(name="cp__id")
+	private long cpId;
 
 	public long getId() {
 		return id;
@@ -90,6 +101,10 @@ public class Opportunity {
 		return estimatedBudget;
 	}
 
+	public double getProposalDuration() {
+		return proposalDuration;
+	}
+
 	public String getOpportunityType() {
 		return opportunityType;
 	}
@@ -108,6 +123,10 @@ public class Opportunity {
 
 	public String getOpportunityNotes() {
 		return opportunityNotes;
+	}
+
+	public long getCpId() {
+		return cpId;
 	}
 
 	public void setId(long id) {
@@ -134,6 +153,10 @@ public class Opportunity {
 		this.estimatedBudget = estimatedBudget;
 	}
 
+	public void setProposalDuration(double proposalDuration) {
+		this.proposalDuration = proposalDuration;
+	}
+
 	public void setOpportunityType(String opportunityType) {
 		this.opportunityType = opportunityType;
 	}
@@ -152,6 +175,10 @@ public class Opportunity {
 
 	public void setOpportunityNotes(String opportunityNotes) {
 		this.opportunityNotes = opportunityNotes;
+	}
+
+	public void setCpId(long cpId) {
+		this.cpId = cpId;
 	}
 	
 }
