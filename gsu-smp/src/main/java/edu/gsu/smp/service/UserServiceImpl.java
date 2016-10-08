@@ -1,5 +1,7 @@
 package edu.gsu.smp.service;
 
+import java.util.List;
+
 import javax.mail.MessagingException;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -206,4 +208,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 		return;
 	}
+	
+	@Override
+	public List<User> list() {
+		return userRepository.findAll();
+	}
+	
+	public void updateEmployee(User user) {
+		User updatedUser = userRepository.findOne(user.getId());
+		updatedUser.setFirstName(user.getFirstName());
+		updatedUser.setLastName(user.getLastName());
+		updatedUser.setRoles(user.getRoles());
+		userRepository.save(updatedUser);
+	}
+	
 }

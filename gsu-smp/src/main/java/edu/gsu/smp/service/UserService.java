@@ -1,5 +1,7 @@
 package edu.gsu.smp.service;
 
+import java.util.List;
+
 import org.springframework.validation.BindingResult;
 
 import edu.gsu.smp.dto.ChangePasswordForm;
@@ -25,5 +27,7 @@ public interface UserService {
 	public abstract void updatePassword(ChangePasswordForm changePasswordForm);
 
 	public abstract void createEmployee(User user);
+
+	public abstract List<User> list();
 	
 }

@@ -70,7 +70,7 @@ public class EmployeeController {
 	@RequestMapping(value="/{id}/update-employee", method=RequestMethod.GET)
 	public String updateEmployee(Model model, @PathVariable("id") long id) {
 		model.addAttribute("roles", Arrays.asList(User.Role.values()));
-		model.addAttribute("user", userServiceImpl.updateEmployee(id));
+		model.addAttribute("user", userServiceImpl.findOne(id));
 		return "/admin/create-employee";
 	}
 	
