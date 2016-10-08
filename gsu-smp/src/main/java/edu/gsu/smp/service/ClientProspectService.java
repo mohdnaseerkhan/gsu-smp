@@ -24,6 +24,7 @@ public class ClientProspectService {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void create(ClientProspect clientProspect) {
 		clientProspectRepository.save(clientProspect);
+		System.out.println("came to client service");
 	}
 	
 	public List<ClientProspect> list(boolean isclient) {
@@ -32,6 +33,21 @@ public class ClientProspectService {
 			System.out.println(l.get(i).getCompanyName());
 		}
 		return clientProspectRepository.findAllByIsClient(isclient);
+	}
+
+	public ClientProspect edit(long id) {
+		return clientProspectRepository.findOne(id);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+	public boolean delete(long id) {
+
+		try {
+			clientProspectRepository.delete(id);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 	
 }
