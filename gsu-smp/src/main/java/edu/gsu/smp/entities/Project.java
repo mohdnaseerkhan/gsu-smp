@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name="project", indexes={@Index(columnList="project_name"), @Index(columnList="cp__id")})
 public class Project {
@@ -37,8 +39,9 @@ public class Project {
 	private Date launchDate;
 	
 	@NotNull
-	@Column(nullable = false)
-	private long chanceToClose;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	@Column(nullable=false, name="chance_to_close", columnDefinition="tinyint(1) default 0")
+	private boolean chanceToClose;
 	
 	@NotNull
 	@Column(nullable = false)
@@ -62,8 +65,8 @@ public class Project {
 	@Column(nullable = false)
 	private String projectStatus;
 	
-	@NotNull
-	@Column(nullable = false)
+	@Size(min=10, max=2000, message="{descriptionSizeError}")
+	@Column(nullable = true)
 	private String rejectionReason;
 	
 	@NotNull
@@ -110,7 +113,7 @@ public class Project {
 		return launchDate;
 	}
 
-	public long getChanceToClose() {
+	public boolean getChanceToClose() {
 		return chanceToClose;
 	}
 
@@ -178,7 +181,7 @@ public class Project {
 		this.launchDate = launchDate;
 	}
 
-	public void setChanceToClose(long chanceToClose) {
+	public void setChanceToClose(boolean chanceToClose) {
 		this.chanceToClose = chanceToClose;
 	}
 

@@ -85,6 +85,17 @@
                   </ul>
               </li>
             </sec:authorize>
+            
+            <sec:authorize access="isAuthenticated()">
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <span class="glyphicon glyphicon-user"></span>Contact <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                     <li><a href="admin/contact/create"><span class="glyphicon glyphicon-user"></span> create Contact</a></li>
+                  </ul>
+              </li>
+            </sec:authorize>
    </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
