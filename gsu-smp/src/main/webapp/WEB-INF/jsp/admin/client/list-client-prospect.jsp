@@ -29,7 +29,9 @@
 </c:forEach>
 						<c:forEach var="clientProspect" items="${clientProspect}">
 							<tr>
-								<td>${clientProspect.companyName}</td>
+								<td>
+								<a href="/admin/client/${clientProspect.id}/show"> ${clientProspect.companyName} </a>
+								</td>
 								<td>${clientProspect.email}</td>
 								<td>${clientProspect.phone}</td>
 								<td><a href="/admin/client/${clientProspect.id}/update"
