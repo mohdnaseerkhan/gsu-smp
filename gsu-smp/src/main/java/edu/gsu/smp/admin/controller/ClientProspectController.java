@@ -32,14 +32,14 @@ public class ClientProspectController {
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute("clientProspect", new ClientProspect());
-		return "/admin/create-client-prospect";
+		return "/admin/client/create-client-prospect";
 	}
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
-	public String createEmployee(@ModelAttribute("clientProspect") @Valid ClientProspect clientProspect,
+	public String create(@ModelAttribute("clientProspect") @Valid ClientProspect clientProspect,
 			BindingResult result, RedirectAttributes redirectAttributes) {
 		if(result.hasErrors()) {
-			return "/admin/create-client-prospect";
+			return "/admin/client/create-client-prospect";
 		}
 		clientProspectService.create(clientProspect);
 		return "redirect:/";
@@ -48,13 +48,13 @@ public class ClientProspectController {
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public String list(Model model) {
 		model.addAttribute("clientProspect", clientProspectService.list(true));
-		return "/admin/list-client-prospect";
+		return "/admin/client/list-client-prospect";
 	}
 	
 	@RequestMapping(value="{id}/update", method=RequestMethod.GET)
 	public String update(Model model, @PathVariable long id) {
 		model.addAttribute("clientProspect", clientProspectService.edit(id));
-		return "/admin/create-client-prospect";
+		return "/admin/client/create-client-prospect";
 	}
 	
 	@RequestMapping(value="{id}/update", method=RequestMethod.POST)
@@ -62,7 +62,7 @@ public class ClientProspectController {
 			BindingResult result, RedirectAttributes redirectAttributes) {
 		
 		if(result.hasErrors()) {
-			return "/admin/create-client-prospect";
+			return "/admin/client/create-client-prospect";
 		}
 		
 		clientProspectService.create(clientProspect);

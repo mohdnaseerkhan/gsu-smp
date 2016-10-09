@@ -48,7 +48,6 @@ public class Contacts {
 	@Column(nullable=true, length=15)
 	private String workPhone;
 	
-	@NotNull
 	@Column(nullable=true, length=15)
 	private String mobilePhone;
 	

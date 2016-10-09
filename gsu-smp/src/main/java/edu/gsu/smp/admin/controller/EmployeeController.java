@@ -39,7 +39,7 @@ public class EmployeeController {
 		model.addAttribute("roles", Arrays.asList(User.Role.values()));
 		user.setPassword(new BigInteger(32, new SecureRandom()).toString(32));
 		model.addAttribute("user", user);
-		return "/admin/create-employee";
+		return "/admin/employee/create-employee";
 	}
 
 	@RequestMapping(value="/create-employee", method=RequestMethod.POST)
@@ -52,7 +52,7 @@ public class EmployeeController {
 		System.out.println("this is your tmporary password: " + user.getPassword());
 		
 		if(result.hasErrors()) {
-			return "/admin/create-employee";
+			return "/admin/employee/create-employee";
 		}
 		
 		userServiceImpl.createEmployee(user);
@@ -63,7 +63,7 @@ public class EmployeeController {
 	@Secured({"ROLE_ADMIN"})
 	public String list(Model model) {
 		model.addAttribute("employees", userServiceImpl.list());
-		return "/admin/list-employee";
+		return "/admin/employee/list-employee";
 	}
 	
 	@Secured({"ROLE_ADMIN"})
@@ -71,7 +71,7 @@ public class EmployeeController {
 	public String updateEmployee(Model model, @PathVariable("id") long id) {
 		model.addAttribute("roles", Arrays.asList(User.Role.values()));
 		model.addAttribute("user", userServiceImpl.findOne(id));
-		return "/admin/create-employee";
+		return "/admin/employee/create-employee";
 	}
 	
 	@RequestMapping(value="/{id}/update-employee", method=RequestMethod.POST)
@@ -81,7 +81,7 @@ public class EmployeeController {
 		if(result.hasErrors()) {
 			model.addAttribute("roles", Arrays.asList(User.Role.values()));
 			model.addAttribute("user", user);
-			return "/admin/create-employee";
+			return "/admin/employee/create-employee";
 		}
 		userServiceImpl.updateEmployee(user);
 		return "redirect:/";
