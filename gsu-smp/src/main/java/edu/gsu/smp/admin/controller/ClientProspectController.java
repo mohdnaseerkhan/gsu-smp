@@ -81,6 +81,12 @@ public class ClientProspectController {
 		}
 		
 		return "redirect:/admin/client/list";
-	}	
+	}
+	
+	@RequestMapping(value="{id}/show")
+	public String show(Model model, @PathVariable("id") long id, RedirectAttributes redirectAttributes) {
+		model.addAttribute("clientProspect", clientProspectService.show(id));
+		return "/admin/client/show";
+	}
 	
 }

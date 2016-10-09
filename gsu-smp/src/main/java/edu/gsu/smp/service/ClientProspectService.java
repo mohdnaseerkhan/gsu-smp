@@ -49,5 +49,9 @@ public class ClientProspectService {
 		}
 		return true;
 	}
+
+	public ClientProspect show(long id) {
+		return clientProspectRepository.findOne(id);
+	}
 	
 }
