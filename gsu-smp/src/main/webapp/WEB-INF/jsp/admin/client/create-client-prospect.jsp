@@ -1,4 +1,4 @@
-<%@include file="../includes/header.jsp"%>
+<%@include file="../../includes/header.jsp"%>
 
 <h1>Create Client/Prospect</h1>
 
@@ -129,4 +129,4 @@ Hello Manager !
 
 
 
-<%@include file="../includes/footer.jsp"%>
+<%@include file="../../includes/footer.jsp"%>
