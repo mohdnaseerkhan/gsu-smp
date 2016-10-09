@@ -1,13 +1,17 @@
 package edu.gsu.smp.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -88,6 +92,18 @@ public class ClientProspect {
 	@LastModifiedDate
 	@Column(name="last_updated", columnDefinition="datetime")
 	private Date lastUpdated = new Date();
+	
+	@OneToMany(targetEntity=Contacts.class,
+			mappedBy="cpId",
+			fetch=FetchType.EAGER,
+			cascade=CascadeType.ALL)
+	private List<Contacts> contacts;
+	
+	@OneToMany(targetEntity=Project.class,
+			mappedBy="cpId",
+			fetch=FetchType.EAGER,
+			cascade=CascadeType.ALL)
+	private List<Project> projects;
 
 	// setters and getters
 	public long getId() {
@@ -241,5 +257,24 @@ public class ClientProspect {
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
-	
+
+	public boolean isClient() {
+		return isClient;
+	}
+
+	public List<Contacts> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<Contacts> contacts) {
+		this.contacts = contacts;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
 }

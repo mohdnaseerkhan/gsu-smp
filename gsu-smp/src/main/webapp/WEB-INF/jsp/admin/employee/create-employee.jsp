@@ -15,7 +15,7 @@
 		<form:input path="firstName" type="text" class="form-control"
 			placeholder="Enter your firstName" />
 		<form:errors cssClass="error" path="firstName" />
-		<p class="help-block">Please enter your firstName id</p>
+		<p class="help-block">Please enter your firstName</p>
 	</div>
 
 	<div class="form-group">
@@ -23,7 +23,7 @@
 		<form:input path="lastName" type="text" class="form-control"
 			placeholder="Enter your lastName" />
 		<form:errors cssClass="error" path="lastName" />
-		<p class="help-block">Please enter your lastName id</p>
+		<p class="help-block">Please enter your lastName</p>
 	</div>
 	<c:if test="${user.getRoles().size() eq 0}"> 
 		<div class="form-group">
@@ -31,7 +31,7 @@
 			<form:input path="email" type="email" class="form-control"
 				placeholder="Enter email" />
 			<form:errors cssClass="error" path="email" />
-			<p class="help-block">Please enter your email id</p>
+			<p class="help-block">Please enter your email</p>
 		</div>
 	</c:if>
 	<c:if test="${user.getRoles().size() gt 0}"> 
