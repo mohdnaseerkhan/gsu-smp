@@ -132,7 +132,8 @@
 		<select size="1" path="cpId" name="cpId" id="cpId"
 			class="form-control">
 			<c:forEach var="company" items="${clients}">
-				<option value="${company.id}">${company.companyName}</option>
+				<option value="${company.id}"
+					<c:if test="${company.id eq project.cpId}">selected="selected"</c:if> >${company.companyName}</option>
 			</c:forEach>
 		</select>
 	</div>

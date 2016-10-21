@@ -20,4 +20,8 @@ public class ProjectService {
 		projectRepository.save(project);
 	}
 
+	public Project findOneById(long id) {
+		return projectRepository.findOne(id);
+	}
+
 }

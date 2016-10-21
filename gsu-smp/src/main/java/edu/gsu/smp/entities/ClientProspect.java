@@ -1,6 +1,8 @@
 package edu.gsu.smp.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -97,13 +99,25 @@ public class ClientProspect {
 			mappedBy="cpId",
 			fetch=FetchType.EAGER,
 			cascade=CascadeType.ALL)
-	private List<Contacts> contacts;
+	private List<Contacts> contacts = null;
+	
+	@OneToMany(targetEntity=Opportunity.class,
+			mappedBy="cpId",
+			fetch=FetchType.EAGER,
+			cascade=CascadeType.ALL)
+	private List<Opportunity> opportunity = null;
 	
 	@OneToMany(targetEntity=Project.class,
 			mappedBy="cpId",
 			fetch=FetchType.EAGER,
 			cascade=CascadeType.ALL)
-	private List<Project> projects;
+	private List<Project> projects = null;
+	
+	@OneToMany(targetEntity=Proposal.class,
+			mappedBy="cpId",
+			fetch=FetchType.EAGER,
+			cascade=CascadeType.ALL)
+	private List<Proposal> proposal = null;
 
 	// setters and getters
 	public long getId() {
@@ -263,7 +277,8 @@ public class ClientProspect {
 	}
 
 	public List<Contacts> getContacts() {
-		return contacts;
+		List<Contacts> contacts1 = new ArrayList<>(new LinkedHashSet<>(contacts));
+		return contacts1;
 	}
 
 	public void setContacts(List<Contacts> contacts) {
@@ -271,10 +286,29 @@ public class ClientProspect {
 	}
 
 	public List<Project> getProjects() {
-		return projects;
+		List<Project> projects1 = new ArrayList<>(new LinkedHashSet<>(projects));
+		return projects1;
 	}
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
+	}
+
+	public List<Opportunity> getOpportunity() {
+		List<Opportunity> opportunity1 = new ArrayList<>(new LinkedHashSet<>(opportunity));
+		return opportunity1;
+	}
+
+	public void setOpportunity(List<Opportunity> opportunity) {
+		this.opportunity = opportunity;
+	}
+
+	public List<Proposal> getProposal() {
+		List<Proposal> proposal1 = new ArrayList<>(new LinkedHashSet<>(proposal));
+		return proposal1;
+	}
+
+	public void setProposal(List<Proposal> proposal) {
+		this.proposal = proposal;
 	}
 }

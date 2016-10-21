@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name="proposal", indexes={@Index(columnList="proposal_name"), @Index(columnList="cp__id")})
 public class Proposal {
@@ -34,8 +36,9 @@ public class Proposal {
 	private Date dateAdded;
 	
 	@NotNull
-	@Column(nullable = false)
-	private long chanceToClose;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	@Column(nullable=false, name="chance_to_close", columnDefinition="tinyint(1) default 0")
+	private boolean chanceToClose;
 	
 	@NotNull
 	@Column(nullable = false)
@@ -59,8 +62,8 @@ public class Proposal {
 	@Column(nullable = false)
 	private String proposalStatus;
 	
-	@NotNull
-	@Column(nullable = false)
+	@Size(min=10, max=2000, message="{descriptionSizeError}")
+	@Column(nullable=false, columnDefinition="text")
 	private String rejectionReason;
 	
 	@NotNull
@@ -103,7 +106,7 @@ public class Proposal {
 		return dateAdded;
 	}
 
-	public long getChanceToClose() {
+	public boolean getChanceToClose() {
 		return chanceToClose;
 	}
 
@@ -160,14 +163,14 @@ public class Proposal {
 	}
 
 	public void setAccountManager(String accountManager) {
-		accountManager = accountManager;
+		this.accountManager = accountManager;
 	}
 
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
 	}
 
-	public void setChanceToClose(long chanceToClose) {
+	public void setChanceToClose(boolean chanceToClose) {
 		this.chanceToClose = chanceToClose;
 	}
 
@@ -214,5 +217,18 @@ public class Proposal {
 	public void setCpId(long cpId) {
 		this.cpId = cpId;
 	}
+
+	@Override
+	public String toString() {
+		return "Proposal [id=" + id + ", proposalName=" + proposalName + ", accountManager=" + accountManager
+				+ ", dateAdded=" + dateAdded + ", chanceToClose=" + chanceToClose + ", estimatedBudget="
+				+ estimatedBudget + ", proposalDuration=" + proposalDuration + ", proposalAmount=" + proposalAmount
+				+ ", totalRevenue=" + totalRevenue + ", proposalStatus=" + proposalStatus + ", rejectionReason="
+				+ rejectionReason + ", contactName=" + contactName + ", contactTelephone=" + contactTelephone
+				+ ", proposalDescription=" + proposalDescription + ", proposalNotes=" + proposalNotes + ", cpId=" + cpId
+				+ "]";
+	}
+	
+	
 
 }

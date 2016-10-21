@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name="opportunity", indexes={@Index(columnList="opportunity_name"), @Index(columnList="cp__id")})
 public class Opportunity {
@@ -26,17 +28,18 @@ public class Opportunity {
 	@Column(nullable = false, name="opportunity_name", length = User.NAME_MAX)
 	private String opportunityName;
 	
-	@NotNull
+	/*@NotNull
 	@Column(nullable = false)
-	private String addedBy;
+	private String addedBy;*/
 	
 	@Column(nullable=true, name="date_added", columnDefinition="timestamp")
 	private Date dateAdded;
 	
 	// this is the percentage of chance to close the opportunity
 	@NotNull
-	@Column(nullable = false)
-	private long chanceToClose;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	@Column(nullable=false, name="chance_to_close", columnDefinition="tinyint(1) default 0")
+	private boolean chanceToClose;
 	
 	@NotNull
 	@Column(nullable = false)
@@ -45,7 +48,7 @@ public class Opportunity {
 	// proposal duration is no.of.days, usually 8 hrs / day
 	@NotNull
 	@Column(nullable = false)
-	private double proposalDuration;
+	private double opportunityDuration;
 	
 	// this is a list of major products and services
 	@NotNull
@@ -85,15 +88,15 @@ public class Opportunity {
 		return opportunityName;
 	}
 
-	public String getAddedBy() {
+	/*public String getAddedBy() {
 		return addedBy;
-	}
+	}*/
 
 	public Date getDateAdded() {
 		return dateAdded;
 	}
 
-	public long getChanceToClose() {
+	public boolean getChanceToClose() {
 		return chanceToClose;
 	}
 
@@ -101,8 +104,8 @@ public class Opportunity {
 		return estimatedBudget;
 	}
 
-	public double getProposalDuration() {
-		return proposalDuration;
+	public double getOpportunityDuration() {
+		return opportunityDuration;
 	}
 
 	public String getOpportunityType() {
@@ -137,15 +140,15 @@ public class Opportunity {
 		this.opportunityName = opportunityName;
 	}
 
-	public void setAddedBy(String addedBy) {
+	/*public void setAddedBy(String addedBy) {
 		this.addedBy = addedBy;
-	}
+	}*/
 
 	public void setDateAdded(Date dateAdded) {
 		this.dateAdded = dateAdded;
 	}
 
-	public void setChanceToClose(long chanceToClose) {
+	public void setChanceToClose(boolean chanceToClose) {
 		this.chanceToClose = chanceToClose;
 	}
 
@@ -153,8 +156,8 @@ public class Opportunity {
 		this.estimatedBudget = estimatedBudget;
 	}
 
-	public void setProposalDuration(double proposalDuration) {
-		this.proposalDuration = proposalDuration;
+	public void setOpportunityDuration(double proposalDuration) {
+		this.opportunityDuration = proposalDuration;
 	}
 
 	public void setOpportunityType(String opportunityType) {

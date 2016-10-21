@@ -33,8 +33,12 @@ public class ContactService {
 		contactsRepository.save(contact);
 	}
 
-	public Contacts update(long id) {
+	public Contacts findOneById(long id) {
 		return contactsRepository.findOne(id);
+	}
+
+	public void update(Contacts contact) {
+		contactsRepository.save(contact);
 	}
 	
 }

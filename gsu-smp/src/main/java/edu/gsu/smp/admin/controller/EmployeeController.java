@@ -49,8 +49,6 @@ public class EmployeeController {
 		
 		user.setPassword(new BigInteger(32, new SecureRandom()).toString(32));
 		
-		System.out.println("this is your tmporary password: " + user.getPassword());
-		
 		if(result.hasErrors()) {
 			return "/admin/employee/create-employee";
 		}

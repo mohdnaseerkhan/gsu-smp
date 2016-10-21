@@ -37,9 +37,10 @@ public class ContactsController {
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public String create(@ModelAttribute("contact") @Valid Contacts contact,
-			BindingResult result, RedirectAttributes redirectAttributes) {
+			BindingResult result, RedirectAttributes redirectAttributes, Model model) {
 		
 		if(result.hasErrors()) {
+			model.addAttribute("clients", contactService.allClient());
 			return "/admin/contact/create-contact";
 		}
 		
@@ -56,8 +57,20 @@ public class ContactsController {
 	@RequestMapping(value="{id}/update", method=RequestMethod.GET)
 	public String update(Model model, @PathVariable long id) {
 		model.addAttribute("clients", contactService.allClient());
-		model.addAttribute("contact", contactService.update(id));
+		model.addAttribute("contact", contactService.findOneById(id));
 		return "/admin/contact/create-contact";
+	}
+	
+	@RequestMapping(value="{id}/update", method=RequestMethod.POST)
+	public String update(@ModelAttribute("contact") @Valid Contacts contact,
+			BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+		
+		if(result.hasErrors()) {
+			model.addAttribute("clients", contactService.allClient());
+			return "/admin/contact/create-contact";
+		}
+		contactService.update(contact);
+		return "redirect:/admin/client/" + contact.getCpId() + "/show";
 	}
 
 }

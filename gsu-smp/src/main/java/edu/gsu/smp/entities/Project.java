@@ -228,4 +228,17 @@ public class Project {
 	public void setCpId(long cpId) {
 		this.cpId = cpId;
 	}
+
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", projectName=" + projectName + ", projectManager=" + projectManager
+				+ ", dateAdded=" + dateAdded + ", launchDate=" + launchDate + ", chanceToClose=" + chanceToClose
+				+ ", estimatedBudget=" + estimatedBudget + ", projectDuration=" + projectDuration + ", projectAmount="
+				+ projectAmount + ", totalRevenue=" + totalRevenue + ", projectStatus=" + projectStatus
+				+ ", rejectionReason=" + rejectionReason + ", contactName=" + contactName + ", contactTelephone="
+				+ contactTelephone + ", projectDescription=" + projectDescription + ", projectNotes=" + projectNotes
+				+ ", cpId=" + cpId + "]";
+	}
+	
+	
 }

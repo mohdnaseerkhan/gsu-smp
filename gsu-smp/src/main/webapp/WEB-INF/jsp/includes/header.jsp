@@ -92,7 +92,7 @@
                       <span class="glyphicon glyphicon-user"></span>Contact <b class="caret"></b>
                   </a>
                   <ul class="dropdown-menu">
-                     <li><a href="admin/contact/create"><span class="glyphicon glyphicon-user"></span> create Contact</a></li>
+                     <li><a href="/admin/contact/create"><span class="glyphicon glyphicon-user"></span> create Contact</a></li>
                   </ul>
               </li>
             </sec:authorize>
