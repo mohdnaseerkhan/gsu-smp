@@ -34,7 +34,7 @@ public class RootController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index() {
 		if(MyUtil.getSessionUser() != null) {
-			return "dashboard";
+			return "admin/dashboard";
 		}
 		return "index";
 	}
