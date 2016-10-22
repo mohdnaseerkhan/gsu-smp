@@ -38,7 +38,7 @@
 	      <ul class="nav navbar-nav navbar-right">
 	      <sec:authorize access="isAnonymous()">
 	      
-	        <li><a href="<c:url value='/signup' />"><span class="glyphicon glyphicon-list-alt"></span> Sign up</a></li>
+	       <%--  <li><a href="<c:url value='/signup' />"><span class="glyphicon glyphicon-list-alt"></span> Sign up</a></li> --%>
 	        <li>
                   <a href="/login">Sign in <span class="glyphicon glyphicon-log-in"></span></a>
             </li>
