@@ -40,8 +40,8 @@
 ************************** this is the Navigation section ********************************************************************* -->
 
 	<div class="brand clearfix">
-		<a href="index.html" class="logo">
-			<img src="/admin/lib/bootstrap-3.3.7/img/logo.jpg" class="img-responsive" alt="">
+		<a href="/" class="logo">GSU-SMP
+			<!-- <img src="/admin/lib/bootstrap-3.3.7/img/logo-1.jpg" class="img-responsive" alt=""> -->
 		</a> 
 		<span class="menu-btn"><i class="fa fa-bars"></i></span>
 		<ul class="ts-profile-nav">
