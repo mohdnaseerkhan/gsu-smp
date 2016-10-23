@@ -1,4 +1,4 @@
-<%@include file="../../includes/header.jsp"%>
+<%@include file="../includes/header.jsp"%>
 
 <h1>Create Client/Prospect</h1>
 
@@ -6,7 +6,7 @@
 	<div class="row visible-on">
 		<div class="col-md-12">
 			<div class="page-header">
-				<h2>All Employees</h2>
+				<h2>All Clients</h2>
 			</div>
 		</div>
 	</div>

@@ -1,4 +1,4 @@
-<%@include file="../../includes/header.jsp"%>
+<%@include file="../includes/header.jsp"%>
 
 <ul class="nav nav-tabs" data-tabs="tabs">
     <li class="active"><a data-toggle="tab" href="#red">Client</a></li>
