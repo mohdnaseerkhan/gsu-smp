@@ -1,4 +1,5 @@
 <%@include file="../includes/header.jsp"%>
+<h1>All Employees</h1>
 
 <div class="container">
 	<div class="row visible-on">
