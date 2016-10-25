@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.gsu.smp.dto.ForgotPasswordForm;
 import edu.gsu.smp.dto.ResetPasswordForm;
+import edu.gsu.smp.service.ClientProspectService;
 import edu.gsu.smp.service.UserService;
 import edu.gsu.smp.util.MyUtil;
 
@@ -25,6 +26,12 @@ public class RootController {
 	private static final Logger logger = LoggerFactory.getLogger(RootController.class);
 	
 	private UserService userService;
+	private ClientProspectService clientProspectService;
+	
+	@Autowired
+	public void setClientProspectService(ClientProspectService clientProspectService) {
+		this.clientProspectService = clientProspectService;
+	}
 
 	@Autowired
 	public RootController(UserService userService) {
@@ -32,8 +39,11 @@ public class RootController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index() {
+	public String index(Model model) {
 		if(MyUtil.getSessionUser() != null) {
+			model.addAttribute("clients", clientProspectService.count(true));
+			model.addAttribute("prospect", clientProspectService.count(false));
+			model.addAttribute("allClients", clientProspectService.list(true));
 			return "admin/dashboard";
 		}
 		return "index";

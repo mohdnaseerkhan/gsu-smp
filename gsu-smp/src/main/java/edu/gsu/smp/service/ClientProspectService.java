@@ -24,15 +24,14 @@ public class ClientProspectService {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public void create(ClientProspect clientProspect) {
 		clientProspectRepository.save(clientProspect);
-		System.out.println("came to client service");
 	}
 	
 	public List<ClientProspect> list(boolean isclient) {
-		List<ClientProspect> l = clientProspectRepository.findAllByIsClient(isclient);
-		for (int i = 0; i < l.size(); i++) {
-			System.out.println(l.get(i).getCompanyName());
-		}
 		return clientProspectRepository.findAllByIsClient(isclient);
+	}
+	
+	public long count(boolean isclient) {
+		return clientProspectRepository.countByIsClient(isclient);
 	}
 
 	public ClientProspect edit(long id) {

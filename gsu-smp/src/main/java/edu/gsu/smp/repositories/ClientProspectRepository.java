@@ -9,5 +9,7 @@ import edu.gsu.smp.entities.ClientProspect;
  public interface ClientProspectRepository extends JpaRepository<ClientProspect, Long> {
 	 
 	 List<ClientProspect> findAllByIsClient(boolean isclient);
+	 
+	 Long countByIsClient(boolean isclient);
 
 }
