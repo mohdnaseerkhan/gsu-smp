@@ -49,6 +49,12 @@ public class RootController {
 		return "index";
 	}
 	
+	@RequestMapping(value = "/about", method = RequestMethod.GET)
+	public String about() {
+		
+		return "about";
+	}
+	
 	@RequestMapping(value = "/forgot-password", method = RequestMethod.GET)
 	public String forgotPassword(Model model) {
 		
