@@ -55,6 +55,12 @@ public class RootController {
 		return "about";
 	}
 	
+	@RequestMapping(value = "/contact", method = RequestMethod.GET)
+	public String contact() {
+		
+		return "contact";
+	}
+	
 	@RequestMapping(value = "/forgot-password", method = RequestMethod.GET)
 	public String forgotPassword(Model model) {
 		
