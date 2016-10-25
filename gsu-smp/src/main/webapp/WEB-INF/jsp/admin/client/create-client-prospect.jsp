@@ -133,7 +133,7 @@
 						</form:errors>
 					</div>
 
-					<button type="submit" class="btn btn-default">Create User</button>
+					<button type="submit" class="btn btn-info">Create User</button>
 
 				</form:form>
 			</div>
